@@ -1,10 +1,10 @@
-from sqlalchemy import Enum, create_engine, Column, Integer, String, Boolean, Float, ForeignKey, 
+from sqlalchemy import Enum, create_engine, Column, Integer, String, Boolean, Float, ForeignKey
 from sqlalchemy.orm import declarative_base
 from sqlalchemy_utils import ChoiceType
 
 db = create_engine("sqlite:///banco.db")
 
-Base = declarative_base(db)
+Base = declarative_base()
 
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -26,14 +26,14 @@ class Usuario(Base):
 class Pedido(Base):
     __tablename__ = "pedidos"
 
-    STATUS_PEDIDO = (
-        ("P", "pendente"),
-        ("C", "cancelado"),
-        ("F", "finalizado")
-    )
+    # STATUS_PEDIDO = (
+    #     ("P", "pendente"),
+    #     ("C", "cancelado"),
+    #     ("F", "finalizado")
+    # )
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
-    status = Column("status", ChoiceType(choices=STATUS_PEDIDO)) 
+    status = Column("status", String) 
     usuario = Column("usuario", ForeignKey("usuarios.id"))
     preco = Column("preco", Float)
     # itens = Column("itens", ForeignKey("itens_pedido.id"))
@@ -46,17 +46,10 @@ class Pedido(Base):
 class ItensPedido(Base):
     __tablename__ = "itens_pedido"
 
-    TAMANHOS = (
-        ('P', 'PEQUENO'),
-        ('M', 'MEDIO'),
-        ('G', 'GRANDE'),
-        ('GG', 'GIGANTE')
-    )
-
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     quantidade = Column("quantidade", Integer)
     sabor = Column("sabor", String)
-    tamanho = Column("tamanho", ChoiceType(choices=TAMANHOS))
+    tamanho = Column("tamanho", String)
     preco_unitario = Column("preco_unitario", Float)
     pedido = Column("pedido", ForeignKey("pedidos.id"))
 

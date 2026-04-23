@@ -12,8 +12,8 @@ async def authenticate():
     """Endpoint for user authentication."""
     return {"message": "Authentication endpoint", "authenticated": False}
 
-@auth_router.pos("/criar-conta")
-async def criar_conta(usuario_schema=UsuarioSchema, session: Session = Depends(pegar_sessao)):
+@auth_router.post("/create-account")
+async def criar_conta(usuario_schema: UsuarioSchema, session: Session = Depends(pegar_sessao)):
     if not session:
         return {"message":"Sessão não encontrada."}
     
