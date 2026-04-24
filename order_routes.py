@@ -15,9 +15,9 @@ async def get_orders():
 @order_router.post('/order')
 async def criar_pedido(pedido_schema: PedidoSchema, session: Session = Depends(pegar_sessao)):
     try:
-        novo_pedido = Pedido(usuario=pedido_schema.id_usuario)
+        novo_pedido = Pedido(usuario=pedido_schema.usuario)
         session.add(novo_pedido)
         session.commit()
         return {"mensagem":f"Pedido criado com sucesso - id: {novo_pedido.id}"}
     except Exception as e:
-        raise HTTPException(status=400, detail=f"Erro ao gerar pedido: {e}")
+        raise HTTPException(status_code=400, detail=f"Erro ao gerar pedido: {e}")

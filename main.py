@@ -7,10 +7,13 @@ from passlib.context import CryptContext
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRING_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRING_MINUTES")
 
 app = FastAPI()
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 from auth_routes import auth_router
 from order_routes import order_router
