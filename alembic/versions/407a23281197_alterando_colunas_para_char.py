@@ -1,8 +1,8 @@
-"""initial migration
+"""ALTERANDO COLUNAS PARA CHAR
 
-Revision ID: 7717e3ddfb3c
+Revision ID: 407a23281197
 Revises: 
-Create Date: 2026-04-23 09:24:22.966754
+Create Date: 2026-04-29 09:10:51.185126
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '7717e3ddfb3c'
+revision: str = '407a23281197'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -32,7 +32,7 @@ def upgrade() -> None:
     )
     op.create_table('pedidos',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('status', sa.String(), nullable=True),
+    sa.Column('status', sa.CHAR(), nullable=True),
     sa.Column('usuario', sa.Integer(), nullable=True),
     sa.Column('preco', sa.Float(), nullable=True),
     sa.ForeignKeyConstraint(['usuario'], ['usuarios.id'], ),
@@ -42,7 +42,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('quantidade', sa.Integer(), nullable=True),
     sa.Column('sabor', sa.String(), nullable=True),
-    sa.Column('tamanho', sa.String(), nullable=True),
+    sa.Column('tamanho', sa.CHAR(), nullable=True),
     sa.Column('preco_unitario', sa.Float(), nullable=True),
     sa.Column('pedido', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['pedido'], ['pedidos.id'], ),

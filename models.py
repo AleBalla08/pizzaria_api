@@ -1,4 +1,4 @@
-from sqlalchemy import Enum, create_engine, Column, Integer, String, Boolean, Float, ForeignKey
+from sqlalchemy import Enum, create_engine, Column, Integer, String, Boolean, Float, ForeignKey, CHAR
 from sqlalchemy.orm import declarative_base
 from sqlalchemy_utils import ChoiceType
 
@@ -33,7 +33,7 @@ class Pedido(Base):
     # )
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
-    status = Column("status", String) 
+    status = Column("status", CHAR) 
     usuario = Column("usuario", ForeignKey("usuarios.id"))
     preco = Column("preco", Float)
     # itens = Column("itens", ForeignKey("itens_pedido.id"))
@@ -46,10 +46,17 @@ class Pedido(Base):
 class ItensPedido(Base):
     __tablename__ = "itens_pedido"
 
+    # TAMANHOS_LIST =(
+    #     ('P', 'PEQUENA'),
+    #     ('M', 'MEDIA'),
+    #     ('G', 'GRANDE'),
+    #     ('GG','GIGANTE')
+    # )
+
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     quantidade = Column("quantidade", Integer)
     sabor = Column("sabor", String)
-    tamanho = Column("tamanho", String)
+    tamanho = Column("tamanho", CHAR)
     preco_unitario = Column("preco_unitario", Float)
     pedido = Column("pedido", ForeignKey("pedidos.id"))
 
