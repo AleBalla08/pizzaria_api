@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from dependencies import pegar_sessao, verificar_token
-from models import Pedido, Usuario
-from schemas import PedidoSchema
+from models import ItensPedido, Pedido, Usuario
+from schemas import ItemPedidoSchema, PedidoSchema
 
 order_router = APIRouter(prefix="/orders", tags=["orders"], dependencies=[Depends(verificar_token)])
 
@@ -32,8 +32,36 @@ async def cancelar_pedido(id_pedido: int, session: Session = Depends(pegar_sessa
 
     if not usuario.admin and usuario.id != pedido.usuario:
         raise HTTPException(status_code=401, detail="Você não tem permissão para realizar essa ação")
-        
+    
+    if pedido.status == 'C':
+        raise HTTPException(status_code=401, detail="O pedido já esta cancelado")
+    
     pedido.status = 'C'
     session.commit()
 
-    return {"message": f"Pedido N°{id_pedido} cancelado com sucesso"}
+    return {"message": f"Pedido N°{pedido.id} cancelado com sucesso", "pedido": pedido}
+
+@order_router.get('/order/listar')
+async def listar_pedidos(session: Session = Depends(pegar_sessao), usuario: Usuario = Depends(verificar_token)):
+    if not usuario.admin:
+        raise HTTPException(status_code=401, detail="Você não tem permissão para realizar essa ação")
+    
+    pedidos = session.query(Pedido).all()
+    return {"pedidos": pedidos}
+
+@order_router.post("/order/adicionar_item/{id_pedido}")
+async def adicionar_item_pedido(id_pedido: int,item_schema: ItemPedidoSchema, session: Session = Depends(pegar_sessao), usuario: Usuario = Depends(verificar_token)):
+    pedido = session.query(Pedido).filter(Pedido.id==item_schema.pedido).first()
+    if not pedido:
+        raise HTTPException(status_code=400, detail="Pedido não encontrado")
+
+    if usuario.id != pedido.usuario:
+        raise HTTPException(status_code=401, detail="Você não tem permissão para realizar essa ação")
+
+    item_pedido = ItensPedido(item_schema.quantidade, item_schema.sabor, item_schema.tamanho, item_schema.preco_unitario, id_pedido)
+    
+    session.add(item_pedido)
+    pedido.calcula_preco()
+    session.commit()
+
+    return {"message": f"Item adicionado ao pedido N°{pedido.id} com sucesso", "item": item_pedido.id, "pedido": pedido.id}
