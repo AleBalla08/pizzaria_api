@@ -38,11 +38,11 @@ class Pedido(Base):
     preco = Column("preco", Float)
     itens = relationship("ItensPedido", cascade="all, delete")
 
-    def __init__(self, usuario, status='pendente', preco=0):
+    def __init__(self, usuario, status='pendente', preco=0, itens=[]):
         self.usuario = usuario
         self.status = status
         self.preco = preco
-    
+
     def calcula_preco(self):
         self.preco = sum(item.quantidade * item.preco_unitario for item in self.itens)
 

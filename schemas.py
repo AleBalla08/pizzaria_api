@@ -15,6 +15,7 @@ class UsuarioSchema(BaseModel):
 
 class PedidoSchema(BaseModel):
     usuario: int
+    itens: Optional[list] = []
     class Config: 
         from_attributes = True
 
@@ -32,6 +33,13 @@ class ItemPedidoSchema(BaseModel):
     preco_unitario: float
     pedido: int
 
+    class Config:
+        from_attributes = True
+
+class ResponsePedidosSchema(BaseModel):
+    id: int
+    status: str
+    preco: float
     class Config:
         from_attributes = True
 

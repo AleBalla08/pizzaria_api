@@ -1,1 +1,219 @@
+# =========================
+
+# Python
+
+# =========================
+
+**pycache**/
+*.py[cod]
+*$py.class
+*.so
+
+# Python cache / tooling
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Type checking
+
+.pyre/
+.pytype/
+
+# =========================
+
+# Virtual Environment
+
+# =========================
+
+.venv/
+venv/
+env/
+ENV/
+.env/
+.venv-*/
+
+# =========================
+
+# Environment Variables
+
+# =========================
+
 .env
+.env.*
+!.env.example
+
+# =========================
+
+# FastAPI / Uvicorn
+
+# =========================
+
+*.log
+logs/
+*.pid
+
+# =========================
+
+# Alembic
+
+# =========================
+
+# NÃO ignore migrations!
+
+# O diretório alembic/versions/ deve ir para o Git.
+
+# =========================
+
+# Database
+
+# =========================
+
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+
+# =========================
+
+# IDEs / Editors
+
+# =========================
+
+.vscode/
+.idea/
+*.iml
+
+# VS Code
+
+.history/
+*.code-workspace
+
+# =========================
+
+# Operating System
+
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# macOS
+
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+
+# Linux
+
+.directory
+
+# =========================
+
+# Build / Distribution
+
+# =========================
+
+build/
+dist/
+*.egg-info/
+.eggs/
+wheels/
+
+# =========================
+
+# Packaging
+
+# =========================
+
+pip-wheel-metadata/
+share/python-wheels/
+MANIFEST
+
+# =========================
+
+# Test / Coverage
+
+# =========================
+
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+
+# =========================
+
+# Jupyter
+
+# =========================
+
+.ipynb_checkpoints/
+
+# =========================
+
+# Celery (caso use futuramente)
+
+# =========================
+
+celerybeat-schedule
+celerybeat.pid
+
+# =========================
+
+# Docker
+
+# =========================
+
+*.pid
+docker-compose.override.yml
+
+# =========================
+
+# Temporary files
+
+# =========================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+
+# =========================
+
+# Secrets / Certificates
+
+# =========================
+
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# =========================
+
+# Local configuration
+
+# =========================
+
+local_settings.py
+config.local.py
+config/*.local.py
